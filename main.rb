@@ -6,6 +6,7 @@ require_relative 'controller'
 
 def submenu(controller, to)
   coin_list = controller.coin_list
+
   puts " Available Coins ".center(50, "*")
   puts coin_list.join(", ")
 
@@ -22,27 +23,22 @@ def submenu(controller, to)
   end
   amount = amount.to_i
 
+  if !controller.coin_list.include?(symbol)
+    puts "Coin #{symbol} is not available"
+  end
 
   case to
-  when "USD"
-    if !controller.coin_list.include?(symbol)
-      puts "Coin #{symbol} is not available"
-    else
-      cost = controller.calculate_cost(symbol, "USD")
-      total_cost = cost * amount
-      puts "#{amount} #{symbol} is #{total_cost} #{to}"
-    end
-  when "EUR"
-    if !controller.coin_list.include?(symbol)
-      puts "Coin #{symbol} is not available"
-    else
-      cost = controller.calculate_cost(symbol, "EUR")
-      total_cost = cost * amount
-      puts "#{amount} #{symbol} is #{total_cost} #{to}"
-    end
+    when "USD"
+        cost = controller.calculate_cost(symbol, "USD")
+        total_cost = cost * amount
+        puts "#{amount} #{symbol} is #{total_cost} #{to}"
+
+    when "EUR"
+        cost = controller.calculate_cost(symbol, "EUR")
+        total_cost = cost * amount
+        puts "#{amount} #{symbol} is #{total_cost} #{to}"
   end
 end
-
 def menu
   controller = Controller.new
 
