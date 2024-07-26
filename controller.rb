@@ -3,7 +3,7 @@
 require "uri"
 require "net/http"
 require 'json'
-require '/Users/pisano/Desktop/Ruby-c/v2_Basics/Crypto2/coin.rb'
+require_relative 'coin'
 
 
 class Controller
@@ -29,14 +29,21 @@ class Controller
   def calculate_cost(symbol, to)
     coin = @@repo[symbol]
     if to == "USD"
-      coin.usd
+      float_cutter(coin.usd)
     elsif to == "EUR"
-      coin.eur
+      float_cutter(coin.eur)
     else
       puts "You can only convert to USD or EUR"
     end
   end
 
+  def float_cutter(float)
+    result = float.to_s.split(".")
+    if result[1].length > 2
+      result[1] = result[1][0..1]
+    end
+    result.join(".").to_f
+  end
   def inform_user
     puts " Crypto Converter ".center(50, "*")
     puts "a. Convert to USD"

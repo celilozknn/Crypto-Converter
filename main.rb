@@ -2,7 +2,7 @@
 
 # "https://min-api.cryptocompare.com/data/pricemulti?fsyms=BTC,ETH,XRP,DASH,LTC&tsyms=USD,EUR"
 
-require "/Users/pisano/Desktop/Ruby-c/v2_Basics/Crypto2/controller.rb"
+require_relative 'controller'
 
 def submenu(controller, to)
   coin_list = controller.coin_list
@@ -23,19 +23,22 @@ def submenu(controller, to)
   amount = amount.to_i
 
 
-  if to == "USD"
+  case to
+  when "USD"
     if !controller.coin_list.include?(symbol)
       puts "Coin #{symbol} is not available"
     else
       cost = controller.calculate_cost(symbol, "USD")
-      puts amount * cost
+      total_cost = cost * amount
+      puts "#{amount} #{symbol} is #{total_cost} #{to}"
     end
-  elsif to == "EUR"
+  when "EUR"
     if !controller.coin_list.include?(symbol)
       puts "Coin #{symbol} is not available"
     else
       cost = controller.calculate_cost(symbol, "EUR")
-      puts amount * cost
+      total_cost = cost * amount
+      puts "#{amount} #{symbol} is #{total_cost} #{to}"
     end
   end
 end
